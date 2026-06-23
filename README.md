@@ -44,7 +44,20 @@ sudo apt install -y pandoc chromium-browser python3-pip fonts-noto-cjk
 pip3 install pypdf reportlab             # 页码（可选）
 ```
 
-> Ubuntu 上 Chrome 包名可能是 `chromium-browser`、`chromium` 或 `google-chrome-stable`，装其中任一即可，脚本会自动在 PATH 里识别。少数较新版本 `apt` 无 `chromium-browser` 时，可用 `sudo snap install chromium` 代替。
+> Ubuntu 上 Chrome 包名可能是 `chromium-browser`、`chromium` 或 `google-chrome-stable`，装其中任一即可，脚本会自动在 PATH 里识别。少数较新版本 `apt` 无 `chromium-browser`（仅剩 snap 包装）时，用官方 `.deb` 装 Google Chrome 最省事：
+>
+> ```bash
+> wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+> sudo apt install -y /tmp/chrome.deb
+> ```
+
+> 若 `pip3 install` 报 `externally-managed-environment`（Debian/Ubuntu 的 PEP 668 锁），改用：
+>
+> ```bash
+> pip3 install --user --break-system-packages pypdf reportlab
+> ```
+>
+> `--user` 装到 `~/.local/...`、不碰系统 Python；`--break-system-packages` 仅解开 PEP 668 锁，配合 `--user` 时不会写入系统目录。
 
 ## 新增一个 skill
 
