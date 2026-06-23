@@ -1,0 +1,77 @@
+/* md-to-pdf 报告样式 —— 单一钢蓝结构色，正文靠字重/斜体/等宽字区分，中文字体，A4 打印 */
+/* 字体跨平台兜底：macOS 用 PingFang/Hiragino，Linux 用 Noto Sans CJK（apt install fonts-noto-cjk），Windows 用微软雅黑 */
+@page { size: A4; margin: 18mm 16mm; }
+
+body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", "STHeiti", "WenQuanYi Micro Hei", sans-serif;
+  font-size: 10.5pt; line-height: 1.7; color: #2b2f36;
+  max-width: 100%; margin: 0;
+}
+
+h1 {
+  font-size: 21pt; color: #223042; margin: 0 0 6px;
+  border-bottom: 3px solid #2f6f9f; padding-bottom: 10px;
+}
+h2 {
+  font-size: 14pt; color: #223042; margin: 26px 0 10px;
+  padding-left: 10px; border-left: 4px solid #2f6f9f;
+}
+h3 { font-size: 11.5pt; color: #3a4654; margin: 16px 0 6px; }
+
+blockquote {
+  margin: 14px 0; padding: 11px 18px; background: #eef4f9;
+  border-left: 4px solid #6aa0c8; color: #3f4d59; border-radius: 0 4px 4px 0;
+  font-size: 9.5pt; line-height: 1.65;
+}
+blockquote p { margin: 3px 0; }
+/* 引用块内加粗只靠字重，不变近黑——保持摘要框柔和蓝灰、整体一致 */
+blockquote strong { color: inherit; }
+/* 引用块内列表：每点独占一行、正常缩进 */
+blockquote ul, blockquote ol { margin: 5px 0; padding-left: 20px; }
+blockquote li { margin: 3px 0; }
+
+/* 正文列表间距 */
+ul, ol { margin: 8px 0; padding-left: 22px; }
+li { margin: 3px 0; }
+
+hr { border: none; border-top: 1px solid #dfe4ea; margin: 22px 0; }
+
+/* 强调：加粗 = 正文同色 + 半粗字重(600)，纯靠字重轻量突出；
+   不加黑(避免比正文更深的斑驳块)，中文小字号 700 会结块故用 600 */
+strong { color: inherit; font-weight: 600; }
+
+code {
+  font-family: "SF Mono", "Menlo", "DejaVu Sans Mono", "Consolas", monospace; font-size: 9pt;
+  background: #f0f2f5; color: #2b2f36; padding: 1px 5px; border-radius: 3px;
+}
+pre {
+  background: #1f2933; color: #e6edf3; padding: 13px 15px;
+  border-radius: 6px; font-size: 8.4pt; line-height: 1.5;
+  /* 打印不裁切：长行自动换行（含中文注释、长路径） */
+  white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;
+}
+pre code { background: none; color: #e6edf3; padding: 0;
+  white-space: pre-wrap; word-break: break-word; }
+
+/* 表格：蓝头 + 斑马纹；紧凑、单元格自动换行不溢出 */
+table { border-collapse: collapse; width: 100%; margin: 13px 0; font-size: 8.9pt;
+  table-layout: auto; }
+th { background: #2f6f9f; color: #fff; text-align: left; padding: 6px 8px; font-weight: 600;
+  overflow-wrap: break-word; }
+td { padding: 5px 8px; border-bottom: 1px solid #e3e8ed; vertical-align: top;
+  overflow-wrap: break-word; }
+tr:nth-child(even) td { background: #f6f9fb; }
+table strong { color: inherit; }
+/* 表内行内码不撑高、不抢眼 */
+td code, th code { font-size: 8.2pt; padding: 0 3px; }
+
+/* 图片：限宽 + 细边框 */
+img { max-width: 100%; height: auto; display: block; margin: 12px auto;
+      border: 1px solid #e3e8ed; border-radius: 4px; }
+
+/* 打印分页：标题不孤行、表格/图/代码块不跨页割裂 */
+h2, h3 { page-break-after: avoid; }
+table, pre, img { page-break-inside: avoid; }
+
+/* 关键：保证打印时背景色/表头色不被浏览器去掉 */
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
